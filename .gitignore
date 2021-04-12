@@ -1,2 +1,4 @@
 *.csv
 *model
+.vscode
+test_code

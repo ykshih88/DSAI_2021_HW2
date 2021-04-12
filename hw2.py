@@ -7,7 +7,7 @@ from torch.utils.data import Dataset,DataLoader
 from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-model_name = 'best_model'
+model_name = 'very_best_model'
 # You can write code above the if-main block.
 def add_col_name(df):
   #新增欄位名稱，將第一列資料歸位(本來在欄位名稱)
@@ -213,7 +213,7 @@ if __name__ == '__main__':
     model = simpleLSTM()
     if(torch.cuda.is_available()):
         model = model.cuda()
-    # train(model,train_loader,test_loader)
+    train(model,train_loader,test_loader)
     
 
     #predict
