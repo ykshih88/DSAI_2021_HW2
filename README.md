@@ -16,5 +16,5 @@ LSTM
 # 方法:
 原本使用ResNet及過去16天開盤價(4*4 image)去預測第17天的開盤價，但發現效果非常不好，出來的都會是一條線。
 後來改用LSTM，使用前200天的資料預測下一天，結果看起來非常好  
-![image] (https://github.com/ykshih88/DSAI_2021_HW2/blob/main/test_plot.png)  
+![image](https://github.com/ykshih88/DSAI_2021_HW2/blob/main/test_plot.png)  
 但其實都是假象，模型總是在抄前幾天的答案，這樣永遠無法知道未來的股價。
