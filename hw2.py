@@ -233,8 +233,11 @@ if __name__ == '__main__':
     #output answer
     with open(args.output, 'w') as output_file:
       cur_hold = 0
-      for row in result_list:
+      for i,row in enumerate(result_list):
         # We will perform your action as the open price in the next day.
+        end_token = '\n'
+        if(i==len(result_list)-1):
+          end_token = ''
         if((row[1]-row[0])>0 and cur_hold<1):#股票為0或-1時可買
           action = 1
           cur_hold+=1
@@ -243,7 +246,7 @@ if __name__ == '__main__':
           cur_hold-=1
         else:
           action = 0
-        output_file.write(str(action)+'\n')
+        output_file.write(str(action)+end_token)
 
         # this is your option, you can leave it empty.
         
