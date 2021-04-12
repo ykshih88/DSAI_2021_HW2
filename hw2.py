@@ -7,6 +7,7 @@ from torch.utils.data import Dataset,DataLoader
 from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+model_name = 'best_model'
 # You can write code above the if-main block.
 def add_col_name(df):
   #新增欄位名稱，將第一列資料歸位(本來在欄位名稱)
@@ -140,7 +141,6 @@ def train(model,train_loader,test_loader):
             test_loss = nn.MSELoss(reduction='mean')
             loss = test_loss(torch.tensor(np.array(pred_model).astype(np.float)),torch.tensor(np.array(label_model).astype(np.float)))
             if (max_loss>loss):
-                model_name = 'best_model'
                 torch.save(model,model_name)
                 max_loss = loss
                 print('save!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! val_loss:',loss.tolist(),end='\n')
@@ -215,19 +215,20 @@ if __name__ == '__main__':
         model = model.cuda()
     # train(model,train_loader,test_loader)
     
+
     #predict
     testing_data = pd.read_csv(args.testing)
     testing_data = add_col_name(testing_data)
     testing_data = testing_data['開'].to_list()
-    testing_data = [float(testing_data[i]) for i in range(1,len(testing_data))]#str to float
+    testing_data = [float(testing_data[i]) for i in range(0,len(testing_data))]#str to float
 
-    model_name = 'very_best_model'
     if(torch.cuda.is_available()):
       model = torch.load(model_name)
     else:
       model = torch.load(model_name, map_location='cpu')
     train_input = val_data[len(val_data)-1][0].squeeze()#使用train data的最後199筆
     result_list = predict_future(train_input,testing_data)
+
 
     #output answer
     with open(args.output, 'w') as output_file:
